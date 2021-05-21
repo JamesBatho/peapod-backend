@@ -78,10 +78,11 @@ class User {
               password,
               first_name,
               last_name,
-              email)
+              email,
+              address)
              VALUES ($1, $2, $3, $4, $5, $6)
-             RETURNING username, first_name AS "firstName", last_name AS "lastName", email`,
-      [username, hashedPassword, firstName, lastName, email]
+             RETURNING username, first_name AS "firstName", last_name AS "lastName", email, address`,
+      [username, hashedPassword, firstName, lastName, email, address]
     );
 
     const user = result.rows[0];
@@ -99,8 +100,8 @@ class User {
       `SELECT username,
                     first_name AS "firstName",
                     last_name AS "lastName",
-                    email,
-                    is_admin AS "isAdmin"
+                    email, 
+                    address
              FROM users
              ORDER BY username`
     );
@@ -122,6 +123,7 @@ class User {
                     first_name AS "firstName",
                     last_name AS "lastName",
                     email,
+                    address
              FROM users
              WHERE username = $1`,
       [username]
@@ -131,14 +133,16 @@ class User {
 
     if (!user) throw new NotFoundError(`No user: ${username}`);
 
-    const userApplicationsRes = await db.query(
-      `SELECT a.job_id
-             FROM applications AS a
-             WHERE a.username = $1`,
-      [username]
-    );
+    // const userApplicationsRes = await db.query(
+    //   `SELECT a.job_id
+    //          FROM applications AS a
+    //          WHERE a.username = $1`,
+    //   [username]
+    // );
 
-    user.applications = userApplicationsRes.rows.map((a) => a.job_id);
+    // user.applications = userApplicationsRes.rows.map((a) => a.job_id);
+
+    // need to add appointments to user + pods
     return user;
   }
 
@@ -176,8 +180,8 @@ class User {
                         RETURNING username,
                                   first_name AS "firstName",
                                   last_name AS "lastName",
-                                  email,
-                                  is_admin AS "isAdmin"`;
+                                  email, 
+                                  address`;
     const result = await db.query(querySql, [...values, username]);
     const user = result.rows[0];
 
