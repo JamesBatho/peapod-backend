@@ -28,7 +28,7 @@ CREATE TABLE children (
 CREATE TABLE appointments (
     id SERIAL PRIMARY KEY,
     is_host BOOLEAN NOT NULL,
-    description TEXT,
+    description TEXT NOT NULL,
     child_slots INTEGER NOT NULL,
     start_time TIMESTAMP,
     end_time TIMESTAMP,

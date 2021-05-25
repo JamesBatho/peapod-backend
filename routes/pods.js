@@ -37,42 +37,42 @@ router.post("/", async function (req, res, next) {
   }
 });
 
-// /** PATCH /[jobId]  { fld1, fld2, ... } => { job }
-//  *
-//  * Data can include: { title, salary, equity }
-//  *
-//  * Returns { id, title, salary, equity, companyHandle }
-//  *
-//  * Authorization required: admin
-//  */
+/** PATCH /[jobId]  { fld1, fld2, ... } => { job }
+ *
+ * Data can include: { title, salary, equity }
+ *
+ * Returns { id, title, salary, equity, companyHandle }
+ *
+ * Authorization required: admin
+ */
 
-// router.patch("/:id", async function (req, res, next) {
-//   try {
-//     const validator = jsonschema.validate(req.body, podUpdateSchema);
-//     if (!validator.valid) {
-//       const errs = validator.errors.map((e) => e.stack);
-//       throw new BadRequestError(errs);
-//     }
+router.patch("/:id", async function (req, res, next) {
+  try {
+    const validator = jsonschema.validate(req.body, podUpdateSchema);
+    if (!validator.valid) {
+      const errs = validator.errors.map((e) => e.stack);
+      throw new BadRequestError(errs);
+    }
 
-//     const job = await Job.update(req.params.id, req.body);
-//     return res.json({ job });
-//   } catch (err) {
-//     return next(err);
-//   }
-// });
+    const job = await Pod.update(req.params.id, req.body);
+    return res.json({ job });
+  } catch (err) {
+    return next(err);
+  }
+});
 
-// /** DELETE /[handle]  =>  { deleted: id }
-//  *
-//  * Authorization required: admin
-//  */
+/** DELETE /[handle]  =>  { deleted: id }
+ *
+ * Authorization required: admin
+ */
 
-// router.delete("/:id", ensureAdmin, async function (req, res, next) {
-//   try {
-//     await Job.remove(req.params.id);
-//     return res.json({ deleted: +req.params.id });
-//   } catch (err) {
-//     return next(err);
-//   }
-// });
+router.delete("/:id", async function (req, res, next) {
+  try {
+    await Pod.remove(req.params.id);
+    return res.json({ deleted: +req.params.id });
+  } catch (err) {
+    return next(err);
+  }
+});
 
 module.exports = router;

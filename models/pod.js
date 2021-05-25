@@ -45,7 +45,7 @@ class Pod {
       userId2: "user_id2",
       userId3: "user_id3",
     });
-    const idVarIdx = "$" + (values.length + 1);
+    const nameVarIdx = "$" + (values.length + 1);
 
     const querySql = `UPDATE pods 
                           SET ${setCols} 
@@ -79,3 +79,4 @@ class Pod {
     if (!pod) throw new NotFoundError(`No pod: ${id}`);
   }
 }
+module.exports = Pod;
