@@ -60,7 +60,7 @@ router.patch("/:id", async function (req, res, next) {
  *
  */
 
-router.delete("/:id", ensureCorrectUser, async function (req, res, next) {
+router.delete("/:id", async function (req, res, next) {
   try {
     await Child.remove(req.params.id);
     return res.json({ deleted: +req.params.id });

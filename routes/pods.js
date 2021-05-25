@@ -46,7 +46,7 @@ router.post("/", async function (req, res, next) {
  * Authorization required: admin
  */
 
-router.patch("/:id", async function (req, res, next) {
+router.patch("/:name", async function (req, res, next) {
   try {
     const validator = jsonschema.validate(req.body, podUpdateSchema);
     if (!validator.valid) {
@@ -54,7 +54,7 @@ router.patch("/:id", async function (req, res, next) {
       throw new BadRequestError(errs);
     }
 
-    const job = await Pod.update(req.params.id, req.body);
+    const job = await Pod.update(req.params.name, req.body);
     return res.json({ job });
   } catch (err) {
     return next(err);
@@ -66,10 +66,10 @@ router.patch("/:id", async function (req, res, next) {
  * Authorization required: admin
  */
 
-router.delete("/:id", async function (req, res, next) {
+router.delete("/:nane", async function (req, res, next) {
   try {
-    await Pod.remove(req.params.id);
-    return res.json({ deleted: +req.params.id });
+    await Pod.remove(req.params.name);
+    return res.json({ deleted: req.params.name });
   } catch (err) {
     return next(err);
   }
