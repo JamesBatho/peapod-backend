@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "age": {
+      "type": "integer"
+    },
+    "allergies": {
+      "type": "string"
+    },
+    "likes": {
+      "type": "string"
+    },
+    "parent_id": {
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": ["id", "name", "age", "allergies", "likes", "parent_id"]
+}

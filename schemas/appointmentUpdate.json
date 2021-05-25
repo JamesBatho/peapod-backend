@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "is_host": {
+      "type": "boolean"
+    },
+    "description": {
+      "type": "string"
+    },
+    "child_slots": {
+      "type": "integer"
+    },
+    "start_time": {
+      "type": "string"
+    },
+    "end_time": {
+      "type": "string"
+    },
+    "creator_id": {
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": []
+}
