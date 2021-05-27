@@ -13,13 +13,13 @@ class Pod {
 
     returns { podid, user1id} */
 
-  static async create({ userId }) {
+  static async create({ name, userId0 }) {
     const result = await db.query(
       `INSERT INTO pods
-            (user_id0)
-            VALUES ($1)
+            (name, user_id0)
+            VALUES ($1, $2)
             RETURNING name, user_id0 as "userId0"`,
-      [userId]
+      [name, userId0]
     );
     const pod = result.rows[0];
 

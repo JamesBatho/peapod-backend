@@ -66,7 +66,7 @@ router.patch("/:name", async function (req, res, next) {
  * Authorization required: admin
  */
 
-router.delete("/:nane", async function (req, res, next) {
+router.delete("/:name", async function (req, res, next) {
   try {
     await Pod.remove(req.params.name);
     return res.json({ deleted: req.params.name });

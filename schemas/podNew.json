@@ -8,12 +8,11 @@
       "minLength": 1,
       "maxLength": 50
     },
-    "userId0": {
+    "user_id0": {
       "type": "string",
       "minLength": 1,
       "maxLength": 50
     }
   },
-  "additionalProperties": false,
-  "required": ["name", "userId0"]
+  "required": ["name", "user_id0"]
 }
