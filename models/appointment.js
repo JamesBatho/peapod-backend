@@ -33,6 +33,15 @@ class Appointment {
     return appointment;
   }
 
+  /** Allow a user to get the appointments they have created */
+
+  static async getAppts(creatorId) {
+    `SELECT * FROM appointments 
+    WHERE creator_id = ${creatorId}
+    
+    `;
+  }
+
   /** Update appointment data with `data`.
    *
    * This is a "partial update" --- it's fine if data doesn't contain all the

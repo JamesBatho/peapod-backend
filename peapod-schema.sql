@@ -10,10 +10,10 @@ CREATE TABLE users (
 
 CREATE TABLE pods (
       name PRIMARY KEY,
-      user_id0 VARCHAR(25) REFERENCES users ON DELETE CASCADE,
-      user_id1 VARCHAR(25) REFERENCES users ON DELETE CASCADE,
-      user_id2 VARCHAR(25) REFERENCES users ON DELETE CASCADE,
-      user_id3 VARCHAR(25) REFERENCES users ON DELETE CASCADE
+      user_id0 VARCHAR(25) REFERENCES users(username) ON DELETE SET NULL,
+      user_id1 VARCHAR(25) REFERENCES users(username) ON DELETE SET NULL,
+      user_id2 VARCHAR(25) REFERENCES users(username) ON DELETE SET NULL,
+      user_id3 VARCHAR(25) REFERENCES users(username) ON DELETE SET NULL
 );
 
 CREATE TABLE children (
@@ -22,7 +22,7 @@ CREATE TABLE children (
     age INTEGER NOT NULL CHECK (age > 0),
     allergies TEXT,
     likes TEXT,
-    parent_id VARCHAR(25) REFERENCES users ON DELETE CASCADE   
+    parent_id VARCHAR(25) REFERENCES users(username) ON DELETE CASCADE   
 );
 
 CREATE TABLE appointments (
@@ -32,5 +32,5 @@ CREATE TABLE appointments (
     child_slots INTEGER NOT NULL,
     start_time TIMESTAMP,
     end_time TIMESTAMP,
-    creator_id VARCHAR(25) REFERENCES users ON DELETE CASCADE
+    creator_id VARCHAR(25) REFERENCES users(username) ON DELETE CASCADE
 );

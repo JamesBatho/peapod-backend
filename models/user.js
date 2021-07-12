@@ -139,17 +139,40 @@ class User {
     const user = userRes.rows[0];
 
     if (!user) throw new NotFoundError(`No user: ${username}`);
+    // adding appointments to user
 
-    // const userApplicationsRes = await db.query(
-    //   `SELECT a.job_id
-    //          FROM applications AS a
-    //          WHERE a.username = $1`,
-    //   [username]
-    // );
+    // thoughts- should appointments live under their pod or their creator
+    const userAppointmentsRes = await db.query(
+      `SELECT a.id
+             FROM appointments AS a
+             WHERE a.creator_id = $1`,
+      [username]
+    );
 
-    // user.applications = userApplicationsRes.rows.map((a) => a.job_id);
+    user.appointments = userAppointmentsRes.rows.map((a) => a.id);
 
-    // need to add appointments to user + pods
+    // adding pod to user
+
+    const userPodsRes = await db.query(
+      `SELECT p.name 
+      FROM pods AS p
+      WHERE p.user_id0 = $1`,
+      [username]
+    );
+
+    user.pods = userPodsRes.rows.map((p) => p.name);
+
+    // adding children to user
+
+    const userChildRes = await db.query(
+      `SELECT c.id 
+      FROM children AS c
+      WHERE c.parent_id = $1`,
+      [username]
+    );
+
+    user.children = userChildRes.rows.map((c) => c.id);
+
     return user;
   }
 
