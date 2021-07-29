@@ -30,6 +30,6 @@
       "maxLength": 60
     }
   },
-  "additionalProperties": false,
+  "additionalProperties": true,
   "required": []
 }

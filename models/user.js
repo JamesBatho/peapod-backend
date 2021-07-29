@@ -30,7 +30,8 @@ class User {
                     first_name AS "firstName",
                     last_name AS "lastName",
                     email,
-                    address
+                    address, 
+                    is_admin AS "isAdmin"
 
              FROM users
              WHERE username = $1`,
@@ -65,6 +66,7 @@ class User {
     lastName,
     email,
     address,
+    isAdmin,
   }) {
     const duplicateCheck = await db.query(
       `SELECT username
@@ -86,10 +88,11 @@ class User {
               first_name,
               last_name,
               email,
-              address)
-             VALUES ($1, $2, $3, $4, $5, $6)
-             RETURNING username, first_name AS "firstName", last_name AS "lastName", email, address`,
-      [username, hashedPassword, firstName, lastName, email, address]
+              address,
+              is_admin)
+             VALUES ($1, $2, $3, $4, $5, $6, $7)
+             RETURNING username, first_name AS "firstName", last_name AS "lastName", email, address, is_admin as "isAdmin"`,
+      [username, hashedPassword, firstName, lastName, email, address, isAdmin]
     );
 
     const user = result.rows[0];
@@ -118,8 +121,8 @@ class User {
 
   /** Given a username, return data about user.
    *
-   * Returns { username, first_name, last_name, is_admin, jobs }
-   *   where jobs is { id, title, company_handle, company_name, state }
+   * Returns { username, first_name, last_name, email, address, is_admin, appointments }
+   *   where appointments are the appointments that the use has created
    *
    * Throws NotFoundError if user not found.
    **/
@@ -139,6 +142,18 @@ class User {
     const user = userRes.rows[0];
 
     if (!user) throw new NotFoundError(`No user: ${username}`);
+
+    // adding pod to user
+
+    const userPodsRes = await db.query(
+      `SELECT p.name 
+          FROM pods AS p
+          WHERE p.user_id0 = $1`,
+      [username]
+    );
+
+    user.pod = userPodsRes.rows.map((p) => p.name);
+
     // adding appointments to user
 
     // thoughts- should appointments live under their pod or their creator
@@ -150,17 +165,6 @@ class User {
     );
 
     user.appointments = userAppointmentsRes.rows.map((a) => a.id);
-
-    // adding pod to user
-
-    const userPodsRes = await db.query(
-      `SELECT p.name 
-      FROM pods AS p
-      WHERE p.user_id0 = $1`,
-      [username]
-    );
-
-    user.pods = userPodsRes.rows.map((p) => p.name);
 
     // adding children to user
 
@@ -211,7 +215,8 @@ class User {
                                   first_name AS "firstName",
                                   last_name AS "lastName",
                                   email, 
-                                  address`;
+                                  address, 
+                                  is_admin AS "isAdmin"`;
     const result = await db.query(querySql, [...values, username]);
     const user = result.rows[0];
 

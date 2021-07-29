@@ -9,8 +9,6 @@ const { BadRequestError } = require("../expressError");
 const Pod = require("../models/pod");
 const podNewSchema = require("../schemas/podNew.json");
 const podUpdateSchema = require("../schemas/podUpdate.json");
-// const jobSearchSchema = require("../schemas/jobSearch.json");
-
 const router = express.Router({ mergeParams: true });
 
 /** POST / { pod } => { pod }
@@ -24,13 +22,14 @@ const router = express.Router({ mergeParams: true });
 
 router.post("/", async function (req, res, next) {
   try {
+    console.log(req.body);
     const validator = jsonschema.validate(req.body, podNewSchema);
     if (!validator.valid) {
       const errs = validator.errors.map((e) => e.stack);
       throw new BadRequestError(errs);
     }
 
-    const pod = await Pod.create(req.body);
+    const pod = await Pod.create({ ...req.body });
     return res.status(201).json({ pod });
   } catch (err) {
     return next(err);

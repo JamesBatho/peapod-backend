@@ -38,7 +38,7 @@ class Appointment {
   static async getAppts(creatorId) {
     `SELECT * FROM appointments 
     WHERE creator_id = ${creatorId}
-    
+    ORDER BY start_time DESC 
     `;
   }
 

@@ -4,13 +4,14 @@ CREATE TABLE users (
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
     email TEXT NOT NULL,
-    address TEXT
+    address TEXT,
+    is_admin BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 
 CREATE TABLE pods (
-      name PRIMARY KEY,
-      user_id0 VARCHAR(25) REFERENCES users(username) ON DELETE SET NULL,
+      name VARCHAR(25) PRIMARY KEY,
+      user_id0 VARCHAR(25) NOT NULL REFERENCES users(username) ON DELETE SET NULL,
       user_id1 VARCHAR(25) REFERENCES users(username) ON DELETE SET NULL,
       user_id2 VARCHAR(25) REFERENCES users(username) ON DELETE SET NULL,
       user_id3 VARCHAR(25) REFERENCES users(username) ON DELETE SET NULL
@@ -33,4 +34,4 @@ CREATE TABLE appointments (
     start_time TIMESTAMP,
     end_time TIMESTAMP,
     creator_id VARCHAR(25) REFERENCES users(username) ON DELETE CASCADE
-);
+);  

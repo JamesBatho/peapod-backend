@@ -11,7 +11,7 @@ class Pod {
 
     data should be {userid}
 
-    returns { podid, user1id} */
+    returns { podId, userId0} */
 
   static async create({ name, userId0 }) {
     const result = await db.query(

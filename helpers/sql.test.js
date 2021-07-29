@@ -19,4 +19,13 @@ describe("sqlForPartialUpdate", function () {
       values: ["v1", "v2"],
     });
   });
+
+  test("throws an error if no data provided", function () {
+    const data = {};
+    try {
+      const error = sqlForPartialUpdate(data, { first_name: "bob" });
+    } catch (err) {
+      expect(err).toEqual(expect.any(Error));
+    }
+  });
 });

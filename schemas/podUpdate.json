@@ -8,22 +8,22 @@
       "minLength": 1,
       "maxLength": 50
     },
-    "user_id0": {
+    "userId0": {
       "type": "string",
       "minLength": 1,
       "maxLength": 50
     },
-    "user_id1": {
+    "userId1": {
       "type": "string",
       "minLength": 1,
       "maxLength": 50
     },
-    "user_id2": {
+    "userId2": {
       "type": "string",
       "minLength": 1,
       "maxLength": 50
     },
-    "user_id3": {
+    "userId3": {
       "type": "string",
       "minLength": 1,
       "maxLength": 50

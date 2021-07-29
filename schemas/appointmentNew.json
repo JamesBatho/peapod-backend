@@ -5,32 +5,32 @@
     "id": {
       "type": "integer"
     },
-    "is_host": {
+    "isHost": {
       "type": "boolean"
     },
     "description": {
       "type": "string"
     },
-    "child_slots": {
+    "childSlots": {
       "type": "integer"
     },
-    "start_time": {
+    "startTime": {
       "type": "string"
     },
-    "end_time": {
+    "endTime": {
       "type": "string"
     },
-    "creator_id": {
+    "creatorId": {
       "type": "integer"
     }
   },
   "additionalProperties": false,
   "required": [
     "id",
-    "is_host",
-    "child_slots",
-    "start_time",
-    "end_time",
-    "creator_id"
+    "isHost",
+    "childSlots",
+    "startTime",
+    "endTime",
+    "creatorId"
   ]
 }
