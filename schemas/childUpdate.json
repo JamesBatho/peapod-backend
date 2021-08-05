@@ -19,11 +19,11 @@
     "likes": {
       "type": "string"
     },
-    "parent_id": {
+    "parentId": {
       "type": "integer"
     }
   },
   "additionalProperties": false,
 
-  "required": []
+  "required": ["name"]
 }

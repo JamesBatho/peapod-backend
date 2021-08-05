@@ -5,25 +5,25 @@
     "id": {
       "type": "integer"
     },
-    "is_host": {
+    "isHost": {
       "type": "boolean"
     },
     "description": {
       "type": "string"
     },
-    "child_slots": {
+    "childSlots": {
       "type": "integer"
     },
-    "start_time": {
+    "startTime": {
       "type": "string"
     },
-    "end_time": {
+    "endTime": {
       "type": "string"
     },
-    "creator_id": {
+    "creatorId": {
       "type": "integer"
     }
   },
   "additionalProperties": false,
-  "required": []
+  "required": ["isHost"]
 }

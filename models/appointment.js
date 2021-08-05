@@ -20,13 +20,14 @@ class Appointment {
     startTime,
     endTime,
     creatorId,
+    podId,
   }) {
     const result = await db.query(
       `INSERT INTO appointments
-            (is_host, description, child_slots, start_time, end_time, creator_id)
-            VALUES ($1,$2,$3,$4,$5,$6)
+            (is_host, description, child_slots, start_time, end_time, creator_id, pod_id)
+            VALUES ($1,$2,$3,$4,$5,$6, $7)
             RETURNING name, user_id0 as "userId0"`,
-      [isHost, description, childSlots, startTime, endTime, creatorId]
+      [isHost, description, childSlots, startTime, endTime, creatorId, podId]
     );
     const appointment = result.rows[0];
 

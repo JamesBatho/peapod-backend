@@ -147,36 +147,45 @@ class User {
     // adding pod to user
 
     const userPodsRes = await db.query(
-      `SELECT p.name 
+      `SELECT name
           FROM pods AS p
           WHERE p.user_id0 = $1 OR p.user_id1 = $1 OR p.user_id2 = $1 OR p.user_id3 = $1`,
       [username]
     );
 
-    user.pod = userPodsRes.rows.map((p) => p.name);
+    if (userPodRes.rows.length !== 0) {
+      user.pod = userPodsRes.rows.map((p) => p.name);
+    }
 
     // adding appointments to user
 
     // thoughts- should appointments live under their pod or their creator
     const userAppointmentsRes = await db.query(
-      `SELECT a.id
+      `SELECT *
              FROM appointments AS a
              WHERE a.creator_id = $1`,
       [username]
     );
 
-    user.appointments = userAppointmentsRes.rows.map((a) => a.id);
+    user.appointments = userAppointmentsRes.rows.map((a) => a);
 
     // adding children to user
 
     const userChildRes = await db.query(
-      `SELECT c.id 
+      `SELECT name, age, allergies, likes 
       FROM children AS c
       WHERE c.parent_id = $1`,
       [username]
     );
 
-    user.children = userChildRes.rows.map((c) => c.id);
+    user.children = userChildRes.rows.map((c) => {
+      return {
+        name: c.name,
+        age: c.age,
+        allergies: c.allergies,
+        likes: c.likes,
+      };
+    });
 
     return user;
   }
