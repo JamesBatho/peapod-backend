@@ -34,4 +34,5 @@ CREATE TABLE appointments (
     start_time TIMESTAMP,
     end_time TIMESTAMP,
     creator_id VARCHAR(25) REFERENCES users(username) ON DELETE CASCADE
+    pod_id VARCHAR(25) REFERENCES pods (name) ON DELETE CASCADE
 );  

@@ -121,8 +121,9 @@ class User {
 
   /** Given a username, return data about user.
    *
-   * Returns { username, first_name, last_name, email, address, is_admin, appointments }
-   *   where appointments are the appointments that the use has created
+   * Returns { username, first_name, last_name, email, address, is_admin, pod, appointments }
+   *   where appointments are the appointments that the user has created
+   * and pod is the users pod
    *
    * Throws NotFoundError if user not found.
    **/
@@ -148,7 +149,7 @@ class User {
     const userPodsRes = await db.query(
       `SELECT p.name 
           FROM pods AS p
-          WHERE p.user_id0 = $1`,
+          WHERE p.user_id0 = $1 OR p.user_id1 = $1 OR p.user_id2 = $1 OR p.user_id3 = $1`,
       [username]
     );
 
