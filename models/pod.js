@@ -52,11 +52,11 @@ class Pod {
                           WHERE name = ${nameVarIdx} 
                           RETURNING  
                           name,
-                          user_id0 as "userId0`;
+                          user_id0 as "userId0", user_id1 as "userId1"`;
     const result = await db.query(querySql, [...values, name]);
     const pod = result.rows[0];
 
-    if (!pod) throw new NotFoundError(`No pod: ${id}`);
+    if (!pod) throw new NotFoundError(`No pod: ${name}`);
 
     return pod;
   }

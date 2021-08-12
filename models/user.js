@@ -146,16 +146,22 @@ class User {
 
     // adding pod to user
 
-    const userPodsRes = await db.query(
-      `SELECT name
+    const userPodRes = await db.query(
+      `SELECT name, user_id0 AS "userId0", user_id1 AS "userId1"
           FROM pods AS p
           WHERE p.user_id0 = $1 OR p.user_id1 = $1 OR p.user_id2 = $1 OR p.user_id3 = $1`,
       [username]
     );
+    if (userPodRes.rows.length == 0) {
+      console.log("no Pod");
+    }
 
     if (userPodRes.rows.length !== 0) {
-      user.pod = userPodsRes.rows.map((p) => p.name);
+      user.pod = userPodRes.rows[0];
     }
+
+    user.pod = userPodRes.rows[0];
+    if (userPodRes.rows.length == 0) console.log("no pod");
 
     // adding appointments to user
 
@@ -167,12 +173,16 @@ class User {
       [username]
     );
 
-    user.appointments = userAppointmentsRes.rows.map((a) => a);
+    if (userAppointmentsRes.rows.length == 0) console.log("no appointments");
+
+    user.appointments = userAppointmentsRes.rows.map((a) => {
+      return { id: a.id, isHost: a.isHost, description: a.description };
+    });
 
     // adding children to user
 
     const userChildRes = await db.query(
-      `SELECT name, age, allergies, likes 
+      `SELECT id, name, age, allergies, likes 
       FROM children AS c
       WHERE c.parent_id = $1`,
       [username]
@@ -180,6 +190,7 @@ class User {
 
     user.children = userChildRes.rows.map((c) => {
       return {
+        id: c.id,
         name: c.name,
         age: c.age,
         allergies: c.allergies,

@@ -36,25 +36,27 @@ router.post("/", async function (req, res, next) {
   }
 });
 
-/** PATCH /[jobId]  { fld1, fld2, ... } => { job }
+/** PATCH / { fld1, fld2, ... } => {  }
  *
- * Data can include: { title, salary, equity }
+ * Data can include: { userId0, userId1 }
  *
- * Returns { id, title, salary, equity, companyHandle }
  *
- * Authorization required: admin
+ *
  */
 
 router.patch("/:name", async function (req, res, next) {
   try {
+    console.log("name", req.params.name);
+    console.log("data", JSON.stringify(req.body));
     const validator = jsonschema.validate(req.body, podUpdateSchema);
     if (!validator.valid) {
       const errs = validator.errors.map((e) => e.stack);
       throw new BadRequestError(errs);
     }
-
-    const job = await Pod.update(req.params.name, req.body);
-    return res.json({ job });
+    console.log("name", req.params.name);
+    console.log("data", JSON.stringify(req.body));
+    const pod = await Pod.update(req.params.name, req.body);
+    return res.json({ pod });
   } catch (err) {
     return next(err);
   }
